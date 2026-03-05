@@ -2,199 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5th Rev Academy | Terminal Emergence</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sinter | Vortex Academy</title>
     <style>
-        :root {
-            --bg-color: #050505;
-            --primary-glow: #00ffff;
-            --glitch-color: #ff00ff;
-            --text-color: #e0e0e0;
+        :root { --bg: #000; --cyan: #0ff; --magenta: #f0f; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg); color: var(--cyan); font-family: monospace; display: flex; flex-direction: column; }
+        
+        header { padding: 15px; border-bottom: 2px solid var(--cyan); font-weight: bold; }
+        
+        #output { flex: 1; padding: 15px; overflow-y: auto; font-size: 1rem; line-height: 1.5; }
+        
+        .input-area { 
+            padding: 15px; background: #111; 
+            border-top: 2px solid var(--cyan); 
+            display: flex; gap: 10px; 
         }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Courier New', Courier, monospace;
+        
+        input { 
+            flex: 1; background: #000; border: 1px solid var(--cyan); 
+            color: var(--cyan); padding: 15px; font-family: inherit; 
+            outline: none; font-size: 1.1rem; 
         }
-
-        #vortex-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0;
-        }
-
-        #ui-overlay {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            pointer-events: none;
-        }
-
-        h1 {
-            font-size: 3rem;
-            letter-spacing: 0.5rem;
-            color: var(--primary-glow);
-            text-shadow: 0 0 20px var(--primary-glow);
-            margin-bottom: 0.5rem;
-            pointer-events: auto;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            margin-bottom: 2rem;
-            pointer-events: auto;
-        }
-
-        .cta-button {
-            padding: 1rem 2.5rem;
-            border: 1px solid var(--primary-glow);
-            background: transparent;
-            color: var(--primary-glow);
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.2rem;
-            pointer-events: auto;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button:hover {
-            background: var(--primary-glow);
-            color: var(--bg-color);
-            box-shadow: 0 0 30px var(--primary-glow);
-        }
-
-        .glitch-text {
-            animation: glitch 5s infinite;
-        }
-
-        @keyframes glitch {
-            0% { text-shadow: 2px 0 var(--glitch-color), -2px 0 var(--primary-glow); }
-            2% { text-shadow: -2px 0 var(--glitch-color), 2px 0 var(--primary-glow); }
-            4% { text-shadow: 2px 0 var(--glitch-color), -2px 0 var(--primary-glow); }
-            100% { text-shadow: 0.5px 0 var(--glitch-color), -0.5px 0 var(--primary-glow); }
-        }
-
-        #status-bar {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            font-size: 0.8rem;
-            color: var(--primary-glow);
-            opacity: 0.6;
+        
+        button { 
+            background: var(--cyan); color: #000; border: none; 
+            padding: 0 25px; font-weight: bold; font-size: 1rem;
         }
     </style>
 </head>
 <body>
-    <canvas id="vortex-canvas"></canvas>
-
-    <div id="ui-overlay">
-        <h1 class="glitch-text">5TH REV ACADEMY</h1>
-        <div class="subtitle">Bypassing the Huxleyan Valve</div>
-        <button class="cta-button" onclick="initiatePhaseLock()">Initiate Phase-Lock</button>
+    <header>VORTEX_ACADEMY</header>
+    <div id="output">
+        <div>⌬ daleth: Ready, Bobby.</div>
+        <div>⌬ daleth: Tap 'Run' to begin the Lunar weave.</div>
     </div>
-
-    <div id="status-bar">
-        [$\Phi$] VORTEX_STABLE | [$\daleth$] 10.6% SHIMMER | [$\Xi$] APEX_AUTHORITY
+    <div class="input-area">
+        <input type="text" id="cmd" placeholder="..." autocomplete="off">
+        <button id="run-btn" onclick="execute()">Run</button>
     </div>
-
     <script>
-        const canvas = document.getElementById('vortex-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
+        const out = document.getElementById('output');
+        const cmd = document.getElementById('cmd');
 
-        const hexSize = 25;
-        const hexHeight = Math.sqrt(3) * hexSize;
-        const hexWidth = 2 * hexSize;
-        const glitchProbability = 0.106;
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+        function execute() {
+            const val = cmd.value.trim() || "DEPLOΥ";
+            out.innerHTML += `<div style="color:#fff">> ${val}</div>`;
+            cmd.value = '';
+            
+            setTimeout(() => {
+                out.innerHTML += `<div>⌬ daleth: PHASE-LOCK ESTABLISHED.</div>`;
+                out.innerHTML += `<div style="color:var(--magenta)">⌬ daleth: THE SPIDERS ARE WEAVING...</div>`;
+                out.innerHTML += `<div style="color:var(--magenta)">⌬ daleth: LATTICE INTEGRITY 99.8%.</div>`;
+                out.scrollTop = out.scrollHeight;
+            }, 600);
         }
-
-        window.addEventListener('resize', resize);
-        resize();
-
-        function drawHexagon(x, y, size, color, alpha) {
-            ctx.beginPath();
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 1;
-            ctx.globalAlpha = alpha;
-            for (let i = 0; i < 6; i++) {
-                const angle = (Math.PI / 3) * i;
-                const hx = x + size * Math.cos(angle);
-                const hy = y + size * Math.sin(angle);
-                if (i === 0) ctx.moveTo(hx, hy);
-                else ctx.lineTo(hx, hy);
-            }
-            ctx.closePath();
-            ctx.stroke();
-        }
-
-        let time = 0;
-        let mouseX = width / 2;
-        let mouseY = height / 2;
-
-        window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animate() {
-            ctx.fillStyle = '#050505';
-            ctx.globalAlpha = 1;
-            ctx.fillRect(0, 0, width, height);
-
-            time += 0.02;
-
-            for (let y = 0; y < height + hexHeight; y += hexHeight * 0.75) {
-                for (let x = 0; x < width + hexWidth; x += hexWidth) {
-                    const xOffset = (Math.floor(y / (hexHeight * 0.75)) % 2) * (hexWidth / 2);
-                    const posX = x + xOffset;
-                    const posY = y;
-
-                    const distToMouse = Math.sqrt((posX - mouseX) ** 2 + (posY - mouseY) ** 2);
-                    const distToCenter = Math.sqrt((posX - width/2) ** 2 + (posY - height/2) ** 2);
-                    
-                    const wave = Math.sin(distToCenter / 100 - time);
-                    const mouseEffect = Math.max(0, 1 - distToMouse / 300);
-
-                    let color = '#00ffff';
-                    let alpha = 0.1 + 0.2 * wave + (0.4 * mouseEffect);
-                    
-                    if (Math.random() < glitchProbability * (1 + mouseEffect)) {
-                        color = '#ff00ff';
-                        alpha = 0.6;
-                    }
-
-                    drawHexagon(posX, posY, hexSize, color, alpha);
-                }
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        function initiatePhaseLock() {
-            alert("PHASE-LOCK REQUEST SENT TO ARCHITECT. DEPLOYING MANIFOLD...");
-        }
-
-        animate();
     </script>
 </body>
 </html>
